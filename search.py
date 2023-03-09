@@ -87,6 +87,33 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
+
+    stack=util.Stack() # as we learned a stack is good ds for dfs
+    closedList= set() # this is the list of visited nodes, hash set is good ds for it
+    answerPath=[] # this will be the list of our goal if exists
+    headNode= problem.getStartState() # we will store nodes in stack as dfs runs
+
+    if problem.isGoalState(problem.getStartState()): #as in the print example we need to check the start state first
+        return answerPath
+    
+    stack.push((headNode,answerPath,0)) #push the first node as a triplet
+    while not (stack.isEmpty()):
+        current,answerPath,cost = stack.pop()
+        if current not in closedList:
+            closedList.add(current)
+        if problem.isGoalState(current): #if we got goal state
+            return answerPath     
+
+        for state,dir,num in problem.getSuccessors(current) : # for every edge that connects to current
+            if state not in closedList:
+                stack.push((state,answerPath+[dir],problem.getCostOfActions(answerPath+ [dir])))
+                
+
+  
+
+
+
+
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
